@@ -15,3 +15,4 @@ stylesheet.add(rule2)
 with open('style.css', 'w') as f:
     f.write(stylesheet.cssText.decode('utf-8'))
 
+<a href="#" class="scroll-to-top"></a>

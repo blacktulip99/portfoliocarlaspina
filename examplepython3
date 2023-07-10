@@ -1,0 +1,33 @@
+import re
+
+def analyze_click_hijacking(clicks):
+    suspicious_clicks = []
+    sanitized_clicks = []
+
+    for click in clicks:
+        if re.search(r'(javascript:|onload=|onmouseover=)', click, re.IGNORECASE):
+            suspicious_clicks.append(click)
+        else:
+            sanitized_clicks.append(click)
+
+    return suspicious_clicks, sanitized_clicks
+
+# Esempio di utilizzo
+clicks = [
+    'https://www.example.com',
+    'javascript:alert("Click Hijacked!")',
+    'https://www.example.com',
+    'onload=alert("Click Hijacked!")',
+    'https://www.example.com',
+    'onmouseover=alert("Click Hijacked!")'
+]
+
+suspicious, sanitized = analyze_click_hijacking(clicks)
+
+print("Suspicious clicks:")
+for click in suspicious:
+    print(click)
+
+print("Sanitized clicks:")
+for click in sanitized:
+    print(click)

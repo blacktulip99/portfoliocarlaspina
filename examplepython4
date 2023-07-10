@@ -1,0 +1,36 @@
+import re
+
+def detect_sql_injection(query):
+    injection_patterns = [
+        r"\b(ALTER|CREATE|DELETE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE)( +\w+){0,1}\b",
+        r"\b(AND|OR|NOT)( +\w+){0,1}\b",
+        r"'.+('|;|\-\-|/\*)",
+        r"\b(UNION( +ALL){0,1}|JOIN|LIKE)( +\w+){0,1}\b"
+    ]
+
+    injections = []
+    for pattern in injection_patterns:
+        matches = re.findall(pattern, query, re.IGNORECASE)
+        injections.extend([match[0] for match in matches])
+
+    return injections
+
+def main():
+    queries = [
+        "SELECT * FROM users WHERE id = 1",
+        "SELECT * FROM users WHERE id = 1 OR 1=1",
+        "SELECT * FROM users WHERE id = 1; DROP TABLE users",
+        "SELECT * FROM users WHERE username = 'admin' --'",
+        "SELECT * FROM users WHERE email LIKE '%@example.com'",
+    ]
+
+    for query in queries:
+        injections = detect_sql_injection(query)
+        if len(injections) > 0:
+            print(f"Possible SQL injection detected in query: {query}")
+            print(f"Detected injection keywords: {', '.join(injections)}")
+        else:
+            print(f"No SQL injection detected in query: {query}")
+
+if __name__ == "__main__":
+    main()

